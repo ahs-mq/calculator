@@ -1,7 +1,11 @@
 let first = 0;
 let second = 0;
 let operator = '';
-let selection = document.getElementsByTagName('button');
+let a = document.getElementsByClassName("num");
+let display = document.getElementById("display");
+let selection = Array.from(a);
+let userInput = [];
+
 
 function add(x,y){
     return x + y;
@@ -40,3 +44,14 @@ function operate(x,op,y){
     }
 }
 
+function interact(){
+    selection.forEach(element => element.addEventListener("click", (event)=>{
+        userInput.push(event.target.value);
+        //console.log(userInput);
+    }) )
+    
+}
+
+console.log(interact());
+
+console.log(userInput);
