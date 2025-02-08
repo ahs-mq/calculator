@@ -4,7 +4,8 @@ let operator = '';
 let a = document.getElementsByClassName("num");
 let display = document.getElementById("display");
 let selection = Array.from(a);
-let userInput = [];
+let userInput = '';
+let final = ''
 
 
 function add(x,y){
@@ -44,14 +45,21 @@ function operate(x,op,y){
     }
 }
 
+
 function interact(){
     selection.forEach(element => element.addEventListener("click", (event)=>{
-        userInput.push(event.target.value);
-        //console.log(userInput);
-    }) )
+        if (event.target.value != '='){
+            userInput += event.target.value;
+            console.log(userInput);
+        } else {
+            final = userInput.replace(/[+\-*/]+/g, match => match[0]);
+            final = final.split(/([+\-*/])/);
+            console.log(final);
+            console.log(operate(Number(final[0]),final[1],Number(final[2])));
+
+        }
+    }));
     
-}
+};
 
-console.log(interact());
-
-console.log(userInput);
+interact();
