@@ -1,39 +1,36 @@
-let first = 0;
-let second = 0;
+let first = '';
+let second = '';
 let operator = '';
-let a = document.getElementsByClassName("num");
+let a = document.getElementsByTagName("button");
 let display = document.getElementById("display");
 let selection = Array.from(a);
 let userInput = '';
-let final = ''
+let final = '';
+let total = 0;
 
 
 function add(x,y){
-    return x + y;
+    return total = x + y;
 }
 
 function sub(x,y){
-    return x - y;
+    return total = x - y;
 }
 
 function divide(x,y){
     if ( y == 0){
     return alert('You can\'t divide by zero!')
     }else{
-    return x / y;
+    return total = x / y;
     }
    
 }
 
 function mult(x,y){
-    return x * y;
+    return total = x * y;
 }
 
 function operate(x,op,y){
-    first = x;
-    second = y;
-    operator = op;
-
     if (op == '+'){
         return add(x,y);
     } else if (op == '-'){
@@ -45,21 +42,32 @@ function operate(x,op,y){
     }
 }
 
-
 function interact(){
     selection.forEach(element => element.addEventListener("click", (event)=>{
-        if (event.target.value != '='){
+        if( event.target.className == 'num'){
             userInput += event.target.value;
-            console.log(userInput);
-        } else {
-            final = userInput.replace(/[+\-*/]+/g, match => match[0]);
-            final = final.split(/([+\-*/])/);
-            console.log(final);
-            console.log(operate(Number(final[0]),final[1],Number(final[2])));
-
+            first = userInput;
+        } else if(event.target.className == 'op'){
+            console.log(first);
+            operator = event.target.value;
+            console.log(operator);
+            if (operator.length > 1){
+                operator = operator.slice(-1);
+            }
+            userInput = '';
+        } else if(event.target.className == 'cal'){
+            //second = userInput;
+            console.log(first);
+            console.log(second);
+            first = parseInt(first);
+            second = parseInt(second);
+            console.log(operate(first,operator,second));
+            userInput = '';
+            first = '';
+            second = '';
+            operator = '';
         }
-    }));
-    
+    }))
 };
 
 interact();
