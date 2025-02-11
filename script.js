@@ -7,7 +7,9 @@ let selection = Array.from(a);
 let userInput = '';
 let final = '';
 let total = 0;
-
+let currentOperation = 0; // 0 = Adding First number, 1 = Select Operation, 2 = Adding Second Number
+let selectedOp = ''; 
+let dotCounter = 0;
 
 function add(x,y){
     return total = x + y;
@@ -42,31 +44,73 @@ function operate(x,op,y){
     }
 }
 
+function determine_input(input_type,value){
+    //
+    if (input_type == "num"){
+        //
+        if (value == '.'){
+            if (dotCounter == 1){
+                value = '';
+            } else {
+                dotCounter = 1
+            }
+        }
+        //
+        if (currentOperation == 0){
+            // We are adding first number 
+            userInput += value;
+            first = userInput;
+            display.textContent = first;
+        } else if (currentOperation == 1){
+             // We are adding first number 
+             userInput += value;
+             second = userInput;
+             console.log(second);           
+             display.textContent = second;
+        }
+    }
+    // 
+    if (input_type == "op"){
+        // 
+        if (currentOperation == 0){
+            if (first != ''){
+                selectedOp = value;
+                current_operation = 1;
+                userInput = '';
+                dotCounter = 0;
+            }
+        }
+        //
+       else if (currentOperation == 1 && second != ''){
+            first = operate(parseFloat(first),selectedOp,parseFloat(second));
+            display.textContent = first;
+            console.log(first);
+            selectedOp = value;
+            second = '';
+            userInput = '';
+            dotCounter = 0;
+
+        }
+    }
+    //
+    if (input_type == 'cal'){
+        first = parseFloat(first);
+        second = parseFloat(second);
+        display.textContent = operate(first,selectedOp,second);
+        first = '';
+        second = '';
+        currentOperation = 0;
+        selectedOp = '';
+        userInput='';
+        dotCounter = 0;
+    }
+
+}
+
 function interact(){
     selection.forEach(element => element.addEventListener("click", (event)=>{
-        if( event.target.className == 'num'){
-            userInput += event.target.value;
-            first = userInput;
-        } else if(event.target.className == 'op'){
-            console.log(first);
-            operator = event.target.value;
-            console.log(operator);
-            if (operator.length > 1){
-                operator = operator.slice(-1);
-            }
-            userInput = '';
-        } else if(event.target.className == 'cal'){
-            //second = userInput;
-            console.log(first);
-            console.log(second);
-            first = parseInt(first);
-            second = parseInt(second);
-            console.log(operate(first,operator,second));
-            userInput = '';
-            first = '';
-            second = '';
-            operator = '';
-        }
+        determine_input(event.target.className,event.target.value)
+   
     }))
 };
 
