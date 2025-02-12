@@ -47,7 +47,7 @@ function operate(x,op,y){
 function determine_input(input_type,value){
     //
     if (input_type == "num"){
-        //
+        
         if (value == '.'){
             if (dotCounter == 1){
                 value = '';
@@ -55,27 +55,25 @@ function determine_input(input_type,value){
                 dotCounter = 1
             }
         }
-        //
+        
         if (currentOperation == 0){
             // We are adding first number 
             userInput += value;
             first = userInput;
             display.textContent = first;
         } else if (currentOperation == 1){
-             // We are adding first number 
+             // We are adding second number 
              userInput += value;
-             second = userInput;
-             console.log(second);           
+             second = userInput;         
              display.textContent = second;
         }
     }
-    // 
+     
     if (input_type == "op"){
-        // 
         if (currentOperation == 0){
             if (first != ''){
                 selectedOp = value;
-                current_operation = 1;
+                currentOperation = 1;
                 userInput = '';
                 dotCounter = 0;
             }
@@ -84,7 +82,6 @@ function determine_input(input_type,value){
        else if (currentOperation == 1 && second != ''){
             first = operate(parseFloat(first),selectedOp,parseFloat(second));
             display.textContent = first;
-            console.log(first);
             selectedOp = value;
             second = '';
             userInput = '';
@@ -103,6 +100,16 @@ function determine_input(input_type,value){
         selectedOp = '';
         userInput='';
         dotCounter = 0;
+    }
+    if (input_type == 'clear'){
+        first = '';
+        second = '';
+        currentOperation = 0;
+        selectedOp = '';
+        userInput='';
+        dotCounter = 0;
+        display.textContent = 'Ready';
+
     }
 
 }
